@@ -1,5 +1,5 @@
 import pytest
-from library_service import search_books_in_catalog, add_book_to_catalog
+from services.library_service import search_books_in_catalog, add_book_to_catalog
 from database import get_db_connection
 from conftest import test_setup
 

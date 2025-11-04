@@ -1,6 +1,6 @@
 import pytest
 from database import get_db_connection
-from library_service import calculate_late_fee_for_book
+from services.library_service import calculate_late_fee_for_book
 from conftest import test_setup
 from datetime import timedelta, datetime
 

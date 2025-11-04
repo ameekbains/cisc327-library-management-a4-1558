@@ -17,7 +17,7 @@ from datetime import datetime, timedelta
 import re
 import pytest
 from app import create_app
-from library_service import (
+from services.library_service import (
     add_book_to_catalog,
     borrow_book_by_patron,
     calculate_late_fee_for_book,

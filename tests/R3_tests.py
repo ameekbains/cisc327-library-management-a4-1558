@@ -18,7 +18,8 @@ from datetime import datetime, timedelta
 import re
 import pytest
 from app import create_app
-from library_service import (
+
+from services.library_service import (
     borrow_book_by_patron,)
 
 
@@ -26,10 +27,10 @@ from library_service import (
 def test_borrow_book_valid_input(monkeypatch):
     """Borrowing succeeds with valid patron ID and available copies."""
 
-    monkeypatch.setattr("library_service.get_book_by_id", lambda book_id: {"id": book_id, "title": "Book", "available_copies": 2})
-    monkeypatch.setattr("library_service.get_patron_borrow_count", lambda patron_id: 2)
-    monkeypatch.setattr("library_service.insert_borrow_record", lambda *args, **kwargs: True)
-    monkeypatch.setattr("library_service.update_book_availability", lambda *args, **kwargs: True)
+    monkeypatch.setattr("services.library_service.get_book_by_id", lambda book_id: {"id": book_id, "title": "Book", "available_copies": 2})
+    monkeypatch.setattr("services.library_service.get_patron_borrow_count", lambda patron_id: 2)
+    monkeypatch.setattr("services.library_service.insert_borrow_record", lambda *args, **kwargs: True)
+    monkeypatch.setattr("services.library_service.update_book_availability", lambda *args, **kwargs: True)
 
     success, message = borrow_book_by_patron("123456", 1)
 
@@ -49,7 +50,7 @@ def test_borrow_book_invalid_patron_id():
 def test_borrow_book_not_found(monkeypatch):
     """Borrowing fails if book does not exist."""
 
-    monkeypatch.setattr("library_service.get_book_by_id", lambda book_id: None)
+    monkeypatch.setattr("services.library_service.get_book_by_id", lambda book_id: None)
 
     success, message = borrow_book_by_patron("123456", 99)
 
@@ -60,7 +61,7 @@ def test_borrow_book_not_found(monkeypatch):
 def test_borrow_book_not_available(monkeypatch):
     """Borrowing fails if no available copies remain."""
 
-    monkeypatch.setattr("library_service.get_book_by_id", lambda book_id: {"id": book_id, "title": "Book", "available_copies": 0})
+    monkeypatch.setattr("services.library_service.get_book_by_id", lambda book_id: {"id": book_id, "title": "Book", "available_copies": 0})
 
     success, message = borrow_book_by_patron("123456", 1)
 
@@ -71,8 +72,8 @@ def test_borrow_book_not_available(monkeypatch):
 def test_borrow_book_patron_limit(monkeypatch):
     """Borrowing fails if patron already borrowed 5 books."""
 
-    monkeypatch.setattr("library_service.get_book_by_id", lambda book_id: {"id": book_id, "title": "Book", "available_copies": 2})
-    monkeypatch.setattr("library_service.get_patron_borrow_count", lambda patron_id: 6)
+    monkeypatch.setattr("services.library_service.get_book_by_id", lambda book_id: {"id": book_id, "title": "Book", "available_copies": 2})
+    monkeypatch.setattr("services.library_service.get_patron_borrow_count", lambda patron_id: 6)
 
     success, message = borrow_book_by_patron("123456", 1)
 

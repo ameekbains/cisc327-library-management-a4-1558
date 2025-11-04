@@ -18,7 +18,7 @@ from datetime import datetime, timedelta
 import re
 import pytest
 from app import create_app
-from library_service import (
+from services.library_service import (
     add_book_to_catalog,)
 
 #provided default test case
@@ -58,7 +58,7 @@ def test_add_book_author_too_long():
 def test_add_book_duplicate_isbn(monkeypatch):
     """Test adding a book with an ISBN that already exists."""
 
-    monkeypatch.setattr("library_service.get_book_by_isbn", lambda isbn: {"isbn": isbn})
+    monkeypatch.setattr("services.library_service.get_book_by_isbn", lambda isbn: {"isbn": isbn})
 
     success, message = add_book_to_catalog("Book", "Author", "1234567890123", 5)
 

@@ -1,6 +1,6 @@
 from database import get_db_connection
 import pytest
-from library_service import get_patron_status_report
+from services.library_service import get_patron_status_report
 from datetime import datetime, timedelta
 from conftest import test_setup
 
