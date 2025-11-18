@@ -36,7 +36,7 @@ jobs:
       - name: Start server
         run: |
           nohup python app.py --port 5000 > server.log 2>&1 &
-          sleep 5  # Wait for the server to start
+          sleep 15  # Wait for the server to start
           
       - name: Run tests (tolerate no tests)
         shell: bash
