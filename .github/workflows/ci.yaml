@@ -38,10 +38,10 @@ jobs:
         run: |
           playwright install --with-deps 
 
-      # 👇 updated server start
+      # updated server start
       - name: Start server
         env:
-          FLASK_APP: app.py        # adjust if your app entrypoint is different
+          FLASK_APP: app.py
           FLASK_ENV: production
         run: |
           # Start the server in the background and log output
